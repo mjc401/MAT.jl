@@ -334,7 +334,7 @@ end
 
 # Write an array to a dataset in a MATLAB file, returning the dataset
 function m_writearray(parent::HDF5Parent, name::String, adata::AbstractArray{T}) where T<:HDF5BitsOrBool
-    adata = Array{Union{T}} where T<:HDF5BitsOrBool
+    adata = Array{Union{T}}(adata)
     dset, dtype = d_create(parent, name, adata)
     try
         HDF5.writearray(dset, dtype.id, adata)
