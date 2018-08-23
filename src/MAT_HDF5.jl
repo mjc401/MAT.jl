@@ -465,7 +465,7 @@ function m_write(mfile::MatlabHDF5File, parent::HDF5Parent, name::String, data::
             close(a)
         end
         # Write the items to the reference group
-        refs = Array{HDF5ReferenceObj}(size(data))
+        refs = Array{HDF5ReferenceObj}(undef, size(data))
         for i = 1:length(data)
             mfile.refcounter += 1
             itemname = string(mfile.refcounter)
