@@ -63,7 +63,7 @@ function close(f::MatlabHDF5File)
         if f.writeheader
             magic = zeros(UInt8, 512)
             identifier = "MATLAB 7.3 MAT-file" # minimal but sufficient
-            magic[1:length(identifier)] = Vector{UInt8}(identifier)
+            magic[1:length(identifier)] = unsafe_wrap(identifier)
             magic[126] = 0x02
             magic[127] = 0x49
             magic[128] = 0x4d
@@ -334,7 +334,7 @@ end
 
 # Write an array to a dataset in a MATLAB file, returning the dataset
 function m_writearray(parent::HDF5Parent, name::String, adata::AbstractArray{T}) where T<:HDF5BitsOrBool
-    adata = Array{Union{T}}(undef, adata)
+    adata = Array{Union{T}}(adata)
     dset, dtype = d_create(parent, name, adata)
     try
         HDF5.writearray(dset, dtype.id, adata)
