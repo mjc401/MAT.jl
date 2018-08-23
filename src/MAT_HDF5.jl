@@ -333,7 +333,7 @@ function m_writeempty(parent::HDF5Parent, name::String, data::Array)
 end
 
 # Write an array to a dataset in a MATLAB file, returning the dataset
-function m_writearray(parent::HDF5Parent, name::String, adata::Array{T}) where T<:ReinterpretArray #where T<:HDF5BitsOrBool
+function m_writearray(parent::HDF5Parent, name::String, adata::Array{T}) where T
     dset, dtype = d_create(parent, name, adata)
     try
         HDF5.writearray(dset, dtype.id, adata)
